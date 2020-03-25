@@ -1,6 +1,8 @@
 package com.ferchoo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MergeSort {
 
@@ -10,13 +12,23 @@ public class MergeSort {
     public int howManyComparisons(int[] numbers){
         comparisons = 0;
 
-        mergeSort(numbers);
+        List a = new ArrayList(numbers.length);
+
+        int index = 0;
+
+        while (index < numbers.length) {
+            a.add(numbers[index]);
+            index++;
+        }
+
+        List b = mergeSort(a);
+
+        // System.out.println("Sorted: " + b.toString());
 
         return comparisons;
-
     }
 
-    public int[] merge (int[] b, int[] c) {
+    public List merge (List b, List c) {
  /*       List merge(List b, List c)
         1. create an empty list a
         2. while both b and c are not empty, compare the first elements of b and c
@@ -27,60 +39,50 @@ public class MergeSort {
         4. return a
   */
 
+        List b1 = new ArrayList<>();
+        List c1 = new ArrayList<>();
 
-        int lengthB = b.length;
-        int lengthC = c.length;
+        b1.addAll(b);
+        c1.addAll(c);
 
-        //System.out.printf("B Split %d, C Split %d \n",lengthB,lengthC);
+        List a = new ArrayList<>();
 
-        int[] a = new int[lengthB+lengthC];
+        //System.out.printf("B Split %d, C Split %d \n",b1.size(),c1.size());
 
-        int indexA = 0;
-        int indexB = 0;
-        int indexC = 0;
-
-        while ( indexB < lengthB && indexC < lengthC ) {
+        while ( !b1.isEmpty() && !c1.isEmpty() ) {
             // comparison
             comparisons++;
-            if (b[indexB] < c[indexC]) {
-                a[indexA] = b[indexB];
-                indexA++;
-                indexB++;
-            } else if (b[indexB] > c[indexC]) {
-                a[indexA] = c[indexC];
-                indexA++;
-                indexC++;
-            } else if (b[indexB] == c[indexC]) {
-                a[indexA] = b[indexB];
-                indexA++;
-                indexB++;
 
-                a[indexA] = c[indexC];
-                indexA++;
-                indexC++;
+            int valueB = (int)b1.get(0);
+            int valueC = (int)c1.get(0);
+
+            if (valueB < valueC) {
+                a.add(b1.get(0));
+                b1.remove(0);
+            } else if (valueB > valueC) {
+                a.add(c1.get(0));
+                c1.remove(0);
+            } else if (valueB == valueC) {
+                a.add(b1.get(0));
+                b1.remove(0);
+
+                a.add(c1.get(0));
+                c1.remove(0);
             }
         }
 
         // insert not empty B
-        while ( indexB < lengthB){
-            a[indexA] = b[indexB];
-            indexA++;
-            indexB++;
-        }
+        a.addAll(b1.subList(0,b1.size()));
 
         // insert not empty C
-        while ( indexC <  lengthC){
-            a[indexA] = c[indexC];
-            indexA++;
-            indexC++;
-        }
+        a.addAll(c1.subList(0,c1.size()));
 
-        //System.out.printf("Merge " + Arrays.toString(a) + "\n");
+        //System.out.printf("Merge " + a.toString() + "\n");
 
         return a;
     }
 
-    public int[] mergeSort (int[] listA) {
+    public List mergeSort (List a) {
         /*
 List mergeSort(List a)
 1. if size(a) <= 1, return a
@@ -91,29 +93,29 @@ List mergeSort(List a)
    List sc = mergeSort(c)
 4. return merge(sb, sc)
          */
-        int sizeListA = listA.length;
-        int kListA = listA.length / (int)2;
-        int listB[];
-        int listC[];
-        int listSB[];
-        int listSC[];
+        int sizeListA = a.size();
+        int kListA = a.size() / (int)2;
+        List b;
+        List c;
+        List sb;
+        List sc;
 
         //System.out.printf("List A Size %d, K %d\n",sizeListA,kListA);
 
-        if (sizeListA <= 1) return listA;
+        if (sizeListA <= 1) return a;
         else {
-            listB = Arrays.copyOfRange(listA,0,kListA);
-            listC = Arrays.copyOfRange(listA,kListA,sizeListA);
+            b = a.subList(0,kListA);
+            c = a.subList(kListA,sizeListA);
         }
-/*
-        System.out.printf("List A " + Arrays.toString(listA) + "\n");
-        System.out.printf("List B " + Arrays.toString(listB) + "\n");
-        System.out.printf("List C " + Arrays.toString(listC) + "\n");
-*/
-        listSB = mergeSort(listB);
-        listSC = mergeSort(listC);
 
-        return merge(listSB,listSC);
+        //System.out.printf("List A " + a.toString() + "\n");
+        //System.out.printf("List B " + b.toString() + "\n");
+        //System.out.printf("List C " + c.toString() + "\n");
+
+        sb = mergeSort(b);
+        sc = mergeSort(c);
+
+        return merge(sb,sc);
     }
 
 }

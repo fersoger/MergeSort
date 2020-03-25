@@ -12,15 +12,15 @@ public class Main {
         MergeSort sorter = new MergeSort();
 
         int[] a = {1, 2, 3, 4};
-        System.out.printf(Arrays.toString(a) + "Comparisons %d \n",sorter.howManyComparisons(a));
+        System.out.printf(Arrays.toString(a) + " Comparisons %d \n",sorter.howManyComparisons(a));
         int[] b = {2, 3, 2};
-        System.out.printf(Arrays.toString(b) + "Comparisons %d \n",sorter.howManyComparisons(b));
+        System.out.printf(Arrays.toString(b) + " Comparisons %d \n",sorter.howManyComparisons(b));
         int[] c = {-17};
-        System.out.printf(Arrays.toString(c) + "Comparisons %d \n",sorter.howManyComparisons(c));
+        System.out.printf(Arrays.toString(c) + " Comparisons %d \n",sorter.howManyComparisons(c));
         int[] d = {};
-        System.out.printf(Arrays.toString(d) + "Comparisons %d \n",sorter.howManyComparisons(d));
+        System.out.printf(Arrays.toString(d) + " Comparisons %d \n",sorter.howManyComparisons(d));
         int[] e = {-2000000000,2000000000,0,0,0,-2000000000,2000000000,0,0,0};
-        System.out.printf(Arrays.toString(e) + "Comparisons %d \n",sorter.howManyComparisons(e));
+        System.out.printf(Arrays.toString(e) + " Comparisons %d \n",sorter.howManyComparisons(e));
     }
 
 }
